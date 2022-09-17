@@ -1,4 +1,7 @@
+# Made by marquis-ng
+
 import curses
+
 def main(stdscr):
     stdscr.keypad(True)
     curses.curs_set(False)
@@ -64,7 +67,7 @@ def main(stdscr):
 
     while True:
         stdscr.erase()
-        stdscr.addstr("marquis-ng\'s PS1 generator\n\n", curses.A_BOLD | curses.A_UNDERLINE | curses.A_REVERSE)
+        stdscr.addstr("PS1 generator\n\n", curses.A_BOLD | curses.A_UNDERLINE | curses.A_REVERSE)
         stdscr.addstr("Items:\n", curses.A_BOLD)
         stdscr.addstr("-" * (stdscr.getmaxyx()[1]))
         stdscr.addstr(" ".join([f"[{i.disp}]" for i in items])[1 - stdscr.getmaxyx()[1]:])
@@ -121,4 +124,7 @@ def main(stdscr):
             else:
                 cursx = 0
 
-print(f"export PS1=\"{''.join([i.real for i in curses.wrapper(main)])}\"")
+try:
+    print(f"export PS1=\"{''.join([i.real for i in curses.wrapper(main)])}\"")
+except BaseException:
+    pass
