@@ -2,14 +2,14 @@
 
 import curses
 
+class Item:
+    def __init__(self, disp, real):
+        self.disp = disp
+        self.real = real
+
 def main(stdscr):
     stdscr.keypad(True)
     curses.curs_set(False)
-
-    class Item:
-        def __init__(self, disp, real):
-            self.disp = disp
-            self.real = real
 
     blocko = ["System", "Time", "Status","Shell", "Command", "Colors", "Styles","Characters", "Reset"]
     blocks = {"System": [
@@ -64,6 +64,7 @@ def main(stdscr):
     items = []
     cursx = 0
     cursy = 0
+    lastx = 0
 
     while True:
         stdscr.erase()
@@ -83,21 +84,27 @@ def main(stdscr):
         key = stdscr.getkey()
         if key == "KEY_UP":
             cursy -= 1
+            cursx = lastx
 
         elif key == "KEY_DOWN":
             cursy += 1
+            cursx = lastx
 
         elif key == "KEY_LEFT":
             cursx -= 1
+            lastx = cursx
             
         elif key == "KEY_RIGHT":
             cursx += 1
+            lastx = cursx
 
         elif key == "KEY_HOME":
             cursx = 0
+            lastx = cursx
 
         elif key == "KEY_END":
             cursx = len(blocks[blocko[cursy]]) - 1
+            lastx = cursx
 
         elif key in ("\n", " "):
             items.append(blocks[blocko[cursy]][cursx])
